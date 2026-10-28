@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pour Nada ❤️</title>
+<style>
+  *{box-sizing:border-box}
+  :root{--pink:#ff4f91;--hot:#ff176c;--deep:#09040b}
+  body{margin:0;min-height:100vh;overflow:hidden;background:radial-gradient(ellipse at 50% 35%,#3b0924 0%,#170713 42%,#050307 100%);color:#fff;font-family:Georgia,'Times New Roman',serif;display:grid;place-items:center}
+  .glow{position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 45%,#ff176c18,transparent 42%)}
+  .scene{position:relative;width:min(92vw,760px);min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px 16px;z-index:1}
+  .intro{font:12px/1.6 Arial,sans-serif;letter-spacing:.38em;text-transform:uppercase;color:#ffc3d8;margin-bottom:28px;opacity:.9}
+  .start{border:1px solid #ff78ac;color:white;background:#ff176c20;border-radius:999px;padding:15px 25px;font-size:15px;letter-spacing:.04em;cursor:pointer;box-shadow:0 0 25px #ff176c3b;transition:.25s}
+  .start:hover,.gift:hover{transform:translateY(-2px);box-shadow:0 0 32px #ff176c80}
+  .hidden{display:none!important}
+  .signature{font-size:clamp(38px,8vw,70px);font-style:italic;color:#ff8db8;text-shadow:0 0 22px #ff176c8a;min-height:1.35em;margin:0 0 10px}
+  .love{font:900 clamp(29px,7vw,58px)/1.2 Arial,sans-serif;letter-spacing:.035em;color:#fff;text-shadow:0 0 9px #ff176c,0 0 30px #ff176c;overflow-wrap:anywhere;margin:4px 0 30px}
+  .gift{cursor:pointer;background:linear-gradient(135deg,#ff4f91,#d90052);border:1px solid #ffb2ce;border-radius:15px;color:white;padding:16px 23px;font-size:17px;box-shadow:0 8px 35px #ff176c45;transition:.25s}
+  .hint{font:12px Arial,sans-serif;color:#eeb5cb;margin-top:14px;letter-spacing:.08em}
+  .petal{position:fixed;top:-12vh;z-index:5;pointer-events:none;color:#ff4d8a;animation:fall linear forwards;filter:drop-shadow(0 0 5px #ff176c88)}
+  @keyframes fall{0%{transform:translate3d(0,-10vh,0) rotate(0deg);opacity:0}10%{opacity:1}100%{transform:translate3d(var(--drift),115vh,0) rotate(650deg);opacity:.15}}
+  .modal{position:fixed;inset:0;z-index:10;background:#050207c9;display:grid;place-items:center;padding:20px;backdrop-filter:blur(8px)}
+  .card{width:min(92vw,430px);padding:36px 24px 30px;border:1px solid #ff6b9f80;border-radius:24px;background:linear-gradient(160deg,#3b0b25,#100711 72%);box-shadow:0 0 65px #ff176c30;text-align:center;animation:pop .45s cubic-bezier(.2,.8,.2,1)}
+  @keyframes pop{from{opacity:0;transform:scale(.75) translateY(15px)}to{opacity:1;transform:scale(1) translateY(0)}}
+  .heart{font-size:54px;filter:drop-shadow(0 0 14px #ff176c);animation:beat 1s infinite}
+  @keyframes beat{50%{transform:scale(1.13)}}
+  .card h2{font-size:clamp(25px,6vw,34px);color:#ff9dbf;margin:12px 0}
+  .card p{font-size:19px;line-height:1.7;margin:0 0 24px}
+  .close{background:transparent;border:1px solid #ff7cab;border-radius:999px;color:white;padding:10px 20px;cursor:pointer}
+  .footer{position:fixed;bottom:18px;color:#b78a9c;font:11px Arial,sans-serif;letter-spacing:.12em}
+  @media(max-height:650px){.scene{min-height:95vh}.intro{margin-bottom:14px}.signature{font-size:42px}.love{font-size:30px;margin-bottom:16px}}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<main class="scene">
+  <div class="intro" id="intro"> MOFAJA2A SGHIIRAAA ♡</div>
+  <button class="start" id="start",> Warkii hnaya abb  ♡</button>
+  <section id="message" class="hidden" aria-live="polite">
+    <h1 class="signature" id="signature"></h1>
+    <div class="love">KANBGHIIIIIIIIIK ❤️</div>
+    <button class="gift" id="gift">🎁 7elli had cadeau</button>
+  </section>
+</main>
+<div class="footer">MADE WITH ♡ FOR NADA</div>
+<div class="modal hidden" id="modal" role="dialog" aria-modal="true" aria-labelledby="giftTitle">
+  <div class="card">
+    <div class="heart">😂</div>
+    <h2 id="giftTitle"> Ganii liyaa ❤️</h2>
+    <button class="close" id="close">Seddih ♡</button>
+  </div>
+</div>
+<script>
+const startBtn=document.getElementById('start');
+const message=document.getElementById('message');
+const intro=document.getElementById('intro');
+const signature=document.getElementById('signature');
+const gift=document.getElementById('gift');
+const modal=document.getElementById('modal');
+const closeBtn=document.getElementById('close');
+let petalTimer=null;
+function makePetal(){
+  const p=document.createElement('span'); p.className='petal';
+  const symbols=['🌹','🌸','♥','❀']; p.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+  p.style.left=Math.random()*100+'vw'; p.style.fontSize=(14+Math.random()*22)+'px';
+  p.style.setProperty('--drift',((Math.random()-.5)*36)+'vw');
+  p.style.animationDuration=(5+Math.random()*6)+'s'; document.body.appendChild(p);
+  setTimeout(()=>p.remove(),12000);
+}
+function typeSignature(){
+  const text='Nada'; let i=0; signature.textContent='';
+  const timer=setInterval(()=>{signature.textContent+=text.charAt(i);i++;if(i>=text.length)clearInterval(timer)},240);
+}
+startBtn.addEventListener('click',()=>{
+  startBtn.classList.add('hidden'); intro.classList.add('hidden'); message.classList.remove('hidden');
+  for(let i=0;i<28;i++)setTimeout(makePetal,i*100);
+  petalTimer=setInterval(makePetal,480); typeSignature();
+});
+gift.addEventListener('click',()=>{modal.classList.remove('hidden');for(let i=0;i<12;i++)setTimeout(makePetal,i*90)});
+closeBtn.addEventListener('click',()=>modal.classList.add('hidden'));
+modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.add('hidden')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.add('hidden')});
+</script>
+</body>
+</html>
